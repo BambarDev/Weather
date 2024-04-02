@@ -66,18 +66,21 @@ const HomeScreen = ({navigation}) => {
         </View>
         <View style={tw`mt-7 flex flex-row justify-evenly`}>
           <WeatherItem
+            textColor="black"
             title="Wind Speed"
             url={require('../../../assets/images/windspeed.png')}
             value="6"
             unit="km/h"
           />
           <WeatherItem
+            textColor="black"
             title="Humidity"
             url={require('../../../assets/images/humidity.png')}
             value="28"
             unit=""
           />
           <WeatherItem
+            textColor="black"
             title="Max Temp"
             url={require('../../../assets/images/max-temp.png')}
             value="42"

@@ -25,26 +25,26 @@ const ProvincesScreen = ({navigation}) => {
         selectionColor="white"
       />
       <ScrollView>
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
-        <ProvinceListItem children="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
+        <ProvinceListItem title="Ulan Bator" />
       </ScrollView>
       <FAB
         color="white"

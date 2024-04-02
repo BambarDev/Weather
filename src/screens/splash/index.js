@@ -8,7 +8,7 @@ const SplashScreen = ({navigation}) => {
     <View style={tw`flex-1 bg-[#90b2f9]/50 justify-center items-center`}>
       <Image
         source={require('../../assets/images/start.png')}
-        style={[tw`h-70 w-70`, {resizeMode: 'contain'}]}
+        style={[tw`h-100 w-100`, {resizeMode: 'contain'}]}
       />
       <Button
         mode="contained"

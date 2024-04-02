@@ -1,9 +1,9 @@
 import tw from 'twrnc';
 import React from 'react';
 import {View} from 'react-native';
-import {RadioButton, Text} from 'react-native-paper';
+import {RadioButton, Text, Title} from 'react-native-paper';
 
-const ProvinceListItem = ({children}) => {
+const ProvinceListItem = ({title}) => {
   const [checked, setChecked] = React.useState('');
 
   return (
@@ -24,7 +24,7 @@ const ProvinceListItem = ({children}) => {
               tw`text-base`,
               checked === 'first' ? tw`text-[#90b2f9]` : tw`text-black/55`,
             ]}>
-            {children}
+            {title}
           </Text>
         </View>
       </View>
