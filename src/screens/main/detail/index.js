@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import tw from 'twrnc';
 import {Image, ScrollView, View} from 'react-native';
 import {IconButton, Text} from 'react-native-paper';
@@ -6,11 +6,52 @@ import LinearGradient from 'react-native-linear-gradient';
 import WeatherCard from '../../../components/weatherCard';
 import WeatherItem from '../../../components/weatherItem';
 import DetailListItem from '../../../components/detailListItem';
+import {useRoute} from '@react-navigation/native';
+import {fetchWeatherForcast} from '../../../api/weather';
 
 const DetailScreen = ({navigation}) => {
+  const [weather, setWeather] = useState(null);
+  const route = useRoute();
+  console.log(route.params);
+  const {
+    currentText,
+    forecastday,
+    currentTemp,
+    locationName,
+    clickedCardIndex,
+    weatherImage,
+    weatherFor,
+    humidity,
+    windKm,
+  } = route.params;
+
+  const fetchNewData = async () => {
+    try {
+      const data = await fetchWeatherForcast({
+        cityName: 'Mongolia',
+        days: '7',
+      });
+      setWeather(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleCardClick = async () => {
+    if (route.name === 'detail') {
+      await fetchNewData();
+    }
+  };
+
+  useEffect(() => {
+    if (route.name === 'detail') {
+      fetchNewData();
+    }
+  }, []);
+
   return (
     <View style={tw`flex-1 bg-[#90b2f8] relative`}>
-      <View style={tw`flex-row justify-between h-16 items-center`}>
+      <View style={tw`flex-row h-16 items-center`}>
         <IconButton
           icon={() => (
             <Image
@@ -21,69 +62,27 @@ const DetailScreen = ({navigation}) => {
           size={30}
           onPress={() => navigation.navigate('home')}
         />
-        <Text style={tw`text-white text-xl font-semibold`}>Ulan Bator</Text>
-        <IconButton
-          icon={() => (
-            <Image
-              style={[tw`h-8 w-8`, {tintColor: 'white'}]}
-              source={require('../../../assets/images/menu.png')}
-            />
-          )}
-          size={30}
-          onPress={() => navigation.navigate('province')}
-        />
+        <Text style={tw`text-white text-xl font-semibold`}>{locationName}</Text>
       </View>
       <View>
         <ScrollView horizontal={true} style={tw`mt-2.5 ml-4`}>
-          <WeatherCard
-            onPress={() => navigation.navigate('detail')}
-            title="17C"
-            url={require('../../../assets/images/clear.png')}
-            subTitle="Mon"
-            color={'#9ebcf9'}
-          />
-          <WeatherCard
-            onPress={() => navigation.navigate('detail')}
-            title="17C"
-            url={require('../../../assets/images/clear.png')}
-            subTitle="Mon"
-            color={'#9ebcf9'}
-          />
-          <WeatherCard
-            onPress={() => navigation.navigate('detail')}
-            title="17C"
-            url={require('../../../assets/images/clear.png')}
-            subTitle="Mon"
-            color={'#9ebcf9'}
-          />
-          <WeatherCard
-            onPress={() => navigation.navigate('detail')}
-            title="17C"
-            url={require('../../../assets/images/clear.png')}
-            subTitle="Mon"
-            color={'#9ebcf9'}
-          />
-          <WeatherCard
-            onPress={() => navigation.navigate('detail')}
-            title="17C"
-            url={require('../../../assets/images/clear.png')}
-            subTitle="Mon"
-            color={'#9ebcf9'}
-          />
-          <WeatherCard
-            onPress={() => navigation.navigate('detail')}
-            title="17C"
-            url={require('../../../assets/images/clear.png')}
-            subTitle="Mon"
-            color={'#9ebcf9'}
-          />
-          <WeatherCard
-            onPress={() => navigation.navigate('detail')}
-            title="17C"
-            url={require('../../../assets/images/clear.png')}
-            subTitle="Mon"
-            color={'#9ebcf9'}
-          />
+          {forecastday?.map((item, index) => {
+            let date = new Date(item.date);
+            let options = {weekday: 'long'};
+            let dayName = date.toLocaleDateString('en-US', options);
+            let shortDayName = dayName.substring(0, 3);
+            let color = index === clickedCardIndex ? '#93c5fd' : '#bfdbfe';
+            return (
+              <WeatherCard
+                onPress={handleCardClick}
+                key={index}
+                title={`${currentTemp} C`}
+                url={weatherImage}
+                subTitle={shortDayName}
+                color={color}
+              />
+            );
+          })}
         </ScrollView>
       </View>
       <View
@@ -111,39 +110,38 @@ const DetailScreen = ({navigation}) => {
               style={tw`flex-1 rounded-xl`}>
               <View style={tw`absolute top-[-10] left-10`}>
                 <Image
-                  source={require(`../../../assets/images/clear.png`)}
+                  source={weatherImage}
                   style={[tw`h-35 w-35`, {resizeMode: 'contain'}]}
                 />
               </View>
               <View style={tw`absolute top-35 left-6`}>
-                <Text style={tw`text-white text-xl`}>Clear</Text>
+                <Text style={tw`text-white text-xl`}>{currentText}</Text>
               </View>
 
               <View style={tw`flex-row absolute top-9 right-10`}>
-                <Text style={tw`text-7xl font-bold text-white/50`}>40</Text>
-                <Text style={tw`text-5xl font-bold text-white/50`}>°</Text>
+                <Text style={tw`text-7xl font-bold text-white/50`}>
+                  {currentTemp}
+                </Text>
+                <Text style={tw`text-5xl font-bold text-white/50`}>&#176;</Text>
               </View>
               <View
                 style={tw`flex-row absolute top-42 left-[-5] right-[-5] justify-evenly`}>
                 <WeatherItem
-                  title=""
                   textColor="white"
                   url={require('../../../assets/images/windspeed.png')}
-                  value="6"
+                  value={windKm}
                   unit="km/h"
                 />
                 <WeatherItem
-                  title=""
                   textColor="white"
                   url={require('../../../assets/images/humidity.png')}
-                  value="28"
+                  value={humidity}
                   unit=""
                 />
                 <WeatherItem
-                  title=""
                   textColor="white"
                   url={require('../../../assets/images/max-temp.png')}
-                  value="42"
+                  value={weatherFor}
                   unit="C"
                 />
               </View>
@@ -153,55 +151,18 @@ const DetailScreen = ({navigation}) => {
         <View style={{height: 200}}>
           <View style={[tw`top-50 mx-1.5`, {zIndex: 1}]}>
             <ScrollView>
-              <DetailListItem
-                currentDate="2 May, Monday"
-                maxTemp="18"
-                minTemp="8"
-                url={require('../../../assets/images/clear.png')}
-                weather="Heavy Cloud"
-              />
-              <DetailListItem
-                currentDate="2 May, Monday"
-                maxTemp="18"
-                minTemp="8"
-                url={require('../../../assets/images/clear.png')}
-                weather="Heavy Cloud"
-              />
-              <DetailListItem
-                currentDate="2 May, Monday"
-                maxTemp="18"
-                minTemp="8"
-                url={require('../../../assets/images/clear.png')}
-                weather="Heavy Cloud"
-              />
-              <DetailListItem
-                currentDate="2 May, Monday"
-                maxTemp="18"
-                minTemp="8"
-                url={require('../../../assets/images/clear.png')}
-                weather="Heavy Cloud"
-              />
-              <DetailListItem
-                currentDate="2 May, Monday"
-                maxTemp="18"
-                minTemp="8"
-                url={require('../../../assets/images/clear.png')}
-                weather="Heavy Cloud"
-              />
-              <DetailListItem
-                currentDate="2 May, Monday"
-                maxTemp="18"
-                minTemp="8"
-                url={require('../../../assets/images/clear.png')}
-                weather="Heavy Cloud"
-              />
-              <DetailListItem
-                currentDate="2 May, Monday"
-                maxTemp="18"
-                minTemp="8"
-                url={require('../../../assets/images/clear.png')}
-                weather="Heavy Cloud"
-              />
+              {forecastday?.map((item, index) => {
+                return (
+                  <DetailListItem
+                    key={index}
+                    currentDate={item.date}
+                    maxTemp={item?.day?.maxtemp_c}
+                    minTemp={item?.day?.mintemp_c}
+                    url={weatherImage}
+                    weather={currentText}
+                  />
+                );
+              })}
             </ScrollView>
           </View>
         </View>

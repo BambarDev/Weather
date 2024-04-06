@@ -1,7 +1,6 @@
 import React from 'react';
 import SplashScreen from '../screens/splash';
 import HomeScreen from '../screens/main/home';
-import ProvincesScreen from '../screens/province';
 import SignInScreen from '../screens/auth/signIn';
 import {createStackNavigator} from '@react-navigation/stack';
 import SignUpScreen from '../screens/auth/signUp';
@@ -20,11 +19,6 @@ const HomeNavigator = () => {
       <Home.Screen
         name="home"
         component={HomeScreen}
-        options={{headerShown: false}}
-      />
-      <Home.Screen
-        name="province"
-        component={ProvincesScreen}
         options={{headerShown: false}}
       />
       <Home.Screen

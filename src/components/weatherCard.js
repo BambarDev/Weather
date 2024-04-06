@@ -8,7 +8,7 @@ const WeatherCard = ({color, title, url, subTitle, onPress}) => {
     <TouchableOpacity
       activeOpacity={0.8}
       style={[
-        tw`p-5 w-20 mr-5 items-center rounded-xl`,
+        tw`p-5 w-24 mr-5 items-center rounded-xl`,
         {
           backgroundColor: color,
           shadowColor: 'rgba(0, 0, 0, 0.2)',
@@ -21,7 +21,7 @@ const WeatherCard = ({color, title, url, subTitle, onPress}) => {
       onPress={onPress}>
       <Text style={tw`text-base font-medium text-white`}>{title}</Text>
       <Image source={url} style={[tw`h-7 w-7 my-1`, {resizeMode: 'contain'}]} />
-      <Text style={tw`text-base font-medium text-white`}>{subTitle}</Text>
+      <Text style={tw`text-white`}>{subTitle}</Text>
     </TouchableOpacity>
   );
 };
